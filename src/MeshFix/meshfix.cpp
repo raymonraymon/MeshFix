@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 	 TMesh::end_progress();
 	 tin.deselectTriangles();
  }
-
+#if 0
 	   // Keep only the largest component (i.e. with most triangles)
 	   int sc = tin.removeSmallestComponents();
 	   if (sc) TMesh::warning("Removed %d small components\n",sc);
@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
 	   // Run geometry correction
 	   if (!tin.boundaries()) TMesh::warning("Fixing degeneracies and intersections...\n");
 	   if (tin.boundaries() || !tin.meshclean()) TMesh::warning("MeshFix could not fix everything.\n", sc);
-
+#endif
 
  TMesh::info("Saving output mesh ...\n");
  tin.save(outfilename);

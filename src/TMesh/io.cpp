@@ -214,6 +214,32 @@ int Basic_TMesh::append(const char *filename, const bool doupdate)
 
 int Basic_TMesh::save(const char *fname, bool back_approx)
 {
+#if 1
+	///////////////////////////////////////////////////////
+	// Keep only the largest component (i.e. with most triangles)
+	int sc = removeSmallestComponents();
+	//if (sc) TMesh::warning("Removed %d small components\n", sc);
+	if (sc)
+		printf("Removed %d small components\n", sc);
+
+	// Fill holes
+	if (boundaries())
+	{
+		printf("Patching holes\n");
+		//TMesh::warning("Patching holes\n");
+		fillSmallBoundaries(0, true);
+	}
+
+	// Run geometry correction
+	if (!boundaries())
+		printf("Fixing degeneracies and intersections...\n");
+	//TMesh::warning("Fixing degeneracies and intersections...\n");
+	if (boundaries() || !meshclean())
+		printf("MeshFix could not fix everything.\n");
+	//TMesh::warning("MeshFix could not fix everything.\n", sc);
+	///////////////////////////////////////////////////////
+#endif 
+
  char nfname[4096];
  strcpy(nfname, fname);
 
